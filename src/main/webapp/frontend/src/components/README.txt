@@ -1,0 +1,1 @@
+Da es sich bei dem Backend um meine Abgabge von exam03 handelt, ist es erforderlich das nginx im Hintergrund läuft.

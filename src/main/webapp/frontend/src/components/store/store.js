@@ -17,7 +17,6 @@ actions: {
     async getJSONWebToken(context, loginData) {
         const username = loginData[0];
         const password = loginData[1];
-        console.log(username, password);
         const authHeader = 'Basic '+ btoa(username +':'+ password);
         console.log(authHeader);
         const response = await network.sendLoginRequest(authHeader);

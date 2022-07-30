@@ -1,16 +1,18 @@
 <template>
 
-  <div id="loginComponent">
-
+  <div class="loginComponent">
+  Login
     <label class="inputFields">
-      <input type="username" id="username" class="form-control" placeholer="Email"/>
+      <input type="username" id="username" class="form-control" placeholder="Email"/>
     </label>
 
       <label class="inputFields">
-      <input type="password" id="password" class="form-control" placeholer="Password"/>
+      <input type="password" id="password" class="form-control" placeholder="Password"/>
     </label>
 
-      <button class="btn btn-secondary loginbutton" @click="submitLoginData()"/>
+      <button class="btn btn-secondary loginbutton" @click="submitLoginData()">
+        Login
+      </button>
       <span class="resultWindow" >
         {{ failed }}
     </span>
@@ -24,6 +26,7 @@ export default {
     return {
         username: "",
         password: "",
+        doc: "",
       failed: "",
       error: ""
     }
@@ -33,7 +36,6 @@ export default {
     async submitLoginData() { // Hier muessen die input Variablen rein
       this.username = document.getElementById("username").value;
       this.password = document.getElementById("password").value;
-      console.log(this.username + " " + this.password);
       const loginData = [this.username, this.password];
       try {
         const response = await this.$store.dispatch('getJSONWebToken', loginData);
@@ -43,16 +45,21 @@ export default {
       }
       catch(e) {
         console.log(e);
-        this.failed = e;
+        this.failed = "Login Failed: " + e;
       }
 
       },
+
 
     }
 }
 </script>
 
 <style scoped>
+
+.loginComponent {
+  margin-left: 45%;
+}
 
 .inputFields {
   padding: 40px;
@@ -67,6 +74,9 @@ export default {
 
 .loginbutton {
   margin-left: 20px;
+  width: 70px;
+  height: 30px;
+
 }
 
 .resultWindow {

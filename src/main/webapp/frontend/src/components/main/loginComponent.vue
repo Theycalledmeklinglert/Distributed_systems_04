@@ -2,53 +2,59 @@
 
   <div id="loginComponent">
 
-    <label class="headline">
-      <input type="username" class="form-control" placeholer="Email"/>
+    <label class="inputFields">
+      <input type="username" id="username" class="form-control" placeholer="Email"/>
     </label>
 
-      <label class="headline">
-      <input type="password" class="form-control" placeholer="Password"/>
+      <label class="inputFields">
+      <input type="password" id="password" class="form-control" placeholer="Password"/>
     </label>
 
       <button class="btn btn-secondary loginbutton" @click="submitLoginData()"/>
-      <div class="result window" v-if="hasLoginFailed()">
-        Login failed
-    </div>
+      <span class="resultWindow" >
+        {{ failed }}
+    </span>
   </div>
 </template>
 
 <script>
 export default {
   name: "loginComponent",
-        obj:{failed:false, username:"", password:""},
+  data() {
+    return {
+        username: "",
+        password: "",
+      failed: "",
+      error: ""
+    }
+    },
 
   methods: {
-    submitLoginData() { // Hier muessen die input Variablen rein
-      this.username = "Admin";
-      this.password = "secret";
-      const loginData = ["Admin", "secret"];
-      const response = this.$store.dispatch('getJSONWebToken', loginData); // Daten von Input Felder auslesen und in Variablen speichern
-      const token = response.data;
+    async submitLoginData() { // Hier muessen die input Variablen rein
+      this.username = document.getElementById("username").value;
+      this.password = document.getElementById("password").value;
+      console.log(this.username + " " + this.password);
+      const loginData = [this.username, this.password];
+      try {
+        const response = await this.$store.dispatch('getJSONWebToken', loginData);
+        console.log(response.status);
+        console.log("Successful Login!");
+        this.failed = "";
+      }
+      catch(e) {
+        console.log(e);
+        this.failed = e;
+      }
 
-      if(response.code != 200 || token === undefined) {
-        this.failed = true;
-      }
-      else {
-      this.failed = false;
-      }
-},
-    hasLoginFailed() {
-      return this.failed;
+      },
+
     }
-
-  }
-
 }
 </script>
 
 <style scoped>
-.headline {
-  background: #434fe8;
+
+.inputFields {
   padding: 40px;
   display: flex;
   position: center;
@@ -61,6 +67,12 @@ export default {
 
 .loginbutton {
   margin-left: 20px;
+}
+
+.resultWindow {
+  padding: 40px;
+  display: flex;
+  position: center;
 }
 
 </style>

@@ -10,8 +10,8 @@ export const store = new Vuex.Store({
     },
     mutations: {
     SET_TOKEN (state, token) {
-        this.state.token = token;
-    }
+        state.token = token;
+    },
 },
 actions: {
     async getJSONWebToken(context, loginData) {
@@ -22,15 +22,16 @@ actions: {
         console.log(authHeader);
         const response = await network.sendLoginRequest(authHeader);
         context.commit('SET_TOKEN', response.data)
-        console.log(response.data);
+        console.log("In store.js " + response.data);
         return response;
 
-    }
+    },
 },
 getters: {
     wasLoginSuccesfull(state) {
         return state.token != undefined;
-    }
+    },
+
 }
 })
 

@@ -78,6 +78,7 @@ public class Users
 
 	private void createUsers( )
 	{
+		addUser("braunp", "secret", "admin");
 		addUser( "Admin", "secret", "admin" );
 		addUser( "Lecturer", "secret", "lecturer" );
 	}

@@ -9,10 +9,6 @@ class NetworkService {
         }
     });
 
-    getDispatcherState() {
-        return this.httpClient.get("http://localhost:8081/exam03/api");
-    }
-
     sendLoginRequest(loginData) {
         const headers = {headers:{"Accept": "application/json", "Authorization": loginData}};
 
